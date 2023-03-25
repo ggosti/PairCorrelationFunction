@@ -3,6 +3,22 @@
 
 Simple code that computes correctly and fast pair correlations.
 
+## Usage
+
+It requires an image with labels.
+
+```python
+centersX,centersY = find_centers(labels)
+bs = 1000
+insideBox,xsBox,ysBox=makeBox(centersX,centersY, bs)
+rs = distances(centersX,centersY,xsBox,ysBox)
+a = gdr(centersX,xsBox,rs,bs)
+plt.plot(a[0], a[1])
+plt.grid()
+plt.hlines(1, 0,1000, color = "black", ls = "--")
+
+```
+
 # Other Projects
 
 Here are some other projects for future comparrison.
