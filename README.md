@@ -8,9 +8,10 @@ Simple code that computes correctly and fast pair correlations.
 It requires an image with labels.
 
 ```python
+h,w = labels.shape
 centersX,centersY = find_centers(labels)
 bs = 1000
-insideBox,xsBox,ysBox=makeBox(centersX,centersY, bs)
+insideBox,xsBox,ysBox=makeBox(centersX,centersY, h, w, bs)
 rs = distances(centersX,centersY,xsBox,ysBox)
 a = gdr(centersX,xsBox,rs,bs)
 plt.plot(a[0], a[1])

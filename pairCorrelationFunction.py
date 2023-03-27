@@ -20,11 +20,11 @@ def find_centers(labels):
   ys = np.array(ys)
   return(xs,ys)
 
-def makeBox(xs,ys, bs = 1000):
+def makeBox(xs,ys, h, w, bs = 1000):
   #rmax = bs #1000
-  centers = np.stack((centersX, centersY), axis = 0).transpose()
+  centers = np.stack((xs, ys), axis = 0).transpose()
   insideBox = (bs<=centers[:,1])*((h-bs)>=centers[:,1])*(bs<=centers[:,0])*((w-bs)>=centers[:,0])
-  xsBox,ysBox = centersX[insideBox2], centersY[insideBox2]
+  xsBox,ysBox = xs[insideBox2], ys[insideBox2]
   return insideBox,xsBox,ysBox
 
 def distances(xs,ys,xsBox,ysBox):
