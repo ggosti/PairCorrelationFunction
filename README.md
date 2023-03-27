@@ -6,7 +6,13 @@ Simple code that computes correctly and fast pair correlations.
 ## Usage
 
 It requires an image with labels.
-
+```python
+a = calc_gdr(labels, b = 1000)
+plt.plot(a[0], a[1])
+plt.grid()
+plt.hlines(1, 0,1000, color = "black", ls = "--")
+```
+or
 ```python
 h,w = labels.shape
 centersX,centersY = find_centers(labels)
@@ -17,7 +23,6 @@ a = gdr(centersX,xsBox,rs,bs)
 plt.plot(a[0], a[1])
 plt.grid()
 plt.hlines(1, 0,1000, color = "black", ls = "--")
-
 ```
 
 # Other Projects
