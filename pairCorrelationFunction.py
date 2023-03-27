@@ -53,10 +53,10 @@ def distances(xs,ys,xsBox,ysBox, bs = 1000):
   rs = R.flatten()
   return rs[rs < 2*bs]  
 
-def gdr(xs,xsBox, rs, bs = 1000): 
+def gdr(xs,xsBox, w, h, rs, bs = 1000, dr = 3):
+  """Function to calculate the gdr. 'xs' and 'xsBox' are the x coordinates of centers in the image and in the inside Box, respectively. 'w' and 'h' are width and height of the image, 'bs' is the size of the border. 'dr' is the number of pixel in a bin of the histogram, i.e. the resolution of the gdr."""
   n = len(xs)
   nBox = len(xsBox)  
-  dr = 3 #(pixel)
   hist, bin_edges = np.histogram(rs, bins= np.arange(1,bs, dr),normed=False)
   rhoBox = float(nBox) / float((w - 2 * bs) * (h - 2 * bs)  ) #(micron)
   rho = float(n) / float(w * h  )  #(micron)
@@ -64,3 +64,11 @@ def gdr(xs,xsBox, rs, bs = 1000):
   deltaV = np.pi * (bin_edges[1:]**2 - bin_edges[:-1]**2)
   g_tot = hist / ( nBox * rho * deltaV )
   return r, g_tot
+
+def calc_gdr(labels, b = 1000):
+  """Function to calculate the gdr. Takes masked image 'label' and boarder size 'b' as arguments."""
+  h,w = labels.shape
+  xs, ys = find_centers(labels)
+  temp, xsBox, ysBox = makeBox(xs,ys, h, w, bs = b)
+  rs = distances(xs,ys,xsBox,ysBox)
+  return gdr(xs,xsBox, w, h, rs, bs = b)
