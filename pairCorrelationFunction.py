@@ -24,7 +24,7 @@ def makeBox(xs,ys, h, w, bs = 1000):
   #rmax = bs #1000
   centers = np.stack((xs, ys), axis = 0).transpose()
   insideBox = (bs<=centers[:,1])*((h-bs)>=centers[:,1])*(bs<=centers[:,0])*((w-bs)>=centers[:,0])
-  xsBox,ysBox = xs[insideBox2], ys[insideBox2]
+  xsBox,ysBox = xs[insideBox], ys[insideBox]
   return insideBox,xsBox,ysBox
 
 def distances(xs,ys,xsBox,ysBox):
