@@ -8,6 +8,7 @@ from scipy.spatial import distance
 
 
 def find_centers(labels):
+  """Given masked image 'labels', returns the centers of the masks."""
   h,w = labels.shape
   regions = regionprops(labels)
   xs = []
@@ -21,13 +22,19 @@ def find_centers(labels):
   return(xs,ys)
 
 def makeBox(xs,ys, h, w, bs = 1000):
+  """Identidies positions of particles inside the image. Inside is defined ignoring a 
+  border of 'bs' pixels from sides, top and bottom of image. 'xs' and 'ys' are the x and y positions of the centers, 
+  respectively. 'h' and 'w' are height and width of the image."""
   #rmax = bs #1000
   centers = np.stack((xs, ys), axis = 0).transpose()
   insideBox = (bs<=centers[:,1])*((h-bs)>=centers[:,1])*(bs<=centers[:,0])*((w-bs)>=centers[:,0])
   xsBox,ysBox = xs[insideBox], ys[insideBox]
   return insideBox,xsBox,ysBox
 
-def distances(xs,ys,xsBox,ysBox):
+def distances(xs,ys,xsBox,ysBox, bs = 1000):
+  """Calculates distances between centers inside the box and all other centers. 
+  'xs' and 'ys' are the x and y positions of all the centers, 
+  'xsBox' and 'ysBox' are the x and y positions of the centers inside the central box."""
   #n = len(xs)
   #nBox = len(xsBox)
   #rs = []
