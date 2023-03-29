@@ -31,27 +31,15 @@ def makeBox(xs,ys, h, w, bs = 1000):
   xsBox,ysBox = xs[insideBox], ys[insideBox]
   return insideBox,xsBox,ysBox
 
-def distances(xs,ys,xsBox,ysBox, bs = 1000):
+def distances(xs,ys,xsBox,ysBox)#, bs = 1000):
   """Calculates distances between centers inside the box and all other centers. 
   'xs' and 'ys' are the x and y positions of all the centers, 
   'xsBox' and 'ysBox' are the x and y positions of the centers inside the central box."""
-  #n = len(xs)
-  #nBox = len(xsBox)
-  #rs = []
-  #for i,xi,yi in zip(np.arange(n),xsBox,ysBox):
-  #  if i%500==0: print(i)
-  #  Dx = xs - xi  
-  #  Dy = ys - yi
-  #  if (Dx ** 2 < 0).any(): print('Dx min 0', Dx)
-  #  if (Dy ** 2 < 0).any(): print('Dx min 0', Dy)
-  #  if ((Dx ** 2 + Dy ** 2) < 0).any(): print('SumofSq min 0', (Dx ** 2 + Dy ** 2))
-  #  distances = np.sqrt(Dx ** 2 + Dy ** 2)
-  #  rs = rs + list(distances)#[distances < 2*bs]) #bs*Conv]) 
   centersA = np.stack((xs, ys), axis = 0).transpose()
   centersB = np.stack((xsBox,ysBox), axis = 0).transpose()
   R = distance.cdist(centersA, centersB, 'euclidean')
   rs = R.flatten()
-  return rs[rs < 2*bs]  
+  return rs #[rs < 2*bs]  
 
 def gdr(xs,xsBox, w, h, rs, bs = 1000, dr = 3):
   """Function to calculate the gdr. 'xs' and 'xsBox' are the x coordinates of centers in the image and in the inside Box, respectively. 'w' and 'h' are width and height of the image, 'bs' is the size of the border. 'dr' is the number of pixel in a bin of the histogram, i.e. the resolution of the gdr."""
